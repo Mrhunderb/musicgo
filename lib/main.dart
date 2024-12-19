@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musicgo/pages/music_play.dart';
 import 'package:musicgo/themes/light.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MusicGo',
       theme: lightTheme,
-      home: const MusicHomePage(),
+      home: const MusicPlayPage(),
     );
   }
 }
