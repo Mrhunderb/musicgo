@@ -36,6 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   just_audio: ^0.9.15
   audio_service: ^0.18.16
+  dio: ^5.7.0
+  logger: ^2.5.0
+  json_serializable: ^6.9.2
+  crypto: ^3.0.6
   flutter_cache_manager: ^3.4.1
 
 dev_dependencies:
