@@ -15,12 +15,17 @@ class Wbi {
   }
 
   Future<String> getCookie() async {
-    final url = "https://api.bilibili.com/x/frontend/finger/spi";
-    _dio.options.headers['user-agent'] =
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63";
-    _dio.get(url).then((response) {
-      print(response.data['data']);
-    });
+    try {
+      final response = await _dio.get(
+        Constant.fingerUrl,
+        options: Options(headers: Constant.defaultHeaders),
+      );
+      return response.data['data'];
+    } catch (e) {
+      // Use a logging framework instead of print
+      // For example, using the logging package
+      // Logger().severe('Request failed: $e');
+    }
 
     return '';
   }
