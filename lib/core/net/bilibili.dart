@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:musicgo/core/config/const.dart';
+import 'package:musicgo/models/bilibili.dart';
 
 class Bilibili {
   static final Dio _dio = Dio();
 
-  static Future<String> search(String keyword) async {
+  static Future<List<SearchResponse>> search(String keyword) async {
     final Map<String, String> params = {
       'keyword': keyword,
       'search_type': 'video',
@@ -19,15 +20,18 @@ class Bilibili {
         Constant.searchUrl,
         queryParameters: params,
         options: Options(
-          headers: {
-            'Cookie': Constant.defaultCookie,
-          },
+          headers: Constant.searchHeaders,
         ),
       );
 
-      return res.data.toString();
+      final List<SearchResponse> searchList = [];
+      for (final item in res.data['data']['result']) {
+        searchList.add(SearchResponse.fromJson(item));
+      }
+      return searchList;
     } catch (e) {
-      return 'Error searching: $e';
+      // TODO: add log
+      return [];
     }
   }
 }

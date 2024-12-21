@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:musicgo/core/net/bilibili.dart';
+import 'package:musicgo/core/net/wbi.dart';
 
 class MusicPlayPage extends StatefulWidget {
   const MusicPlayPage({super.key});
@@ -41,6 +43,15 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
 
   Future<void> _loadCurrentSong() async {
     try {
+      final params = Map<String, String>.from({
+        'mid': '2',
+        "dm_img_list": "[]",
+        "dm_img_str": "V2ViR0wgMS",
+        "dm_cover_img_str": "SW50ZWwoUikgSEQgR3JhcGhpY3NJbnRlbA",
+      });
+      // final key = await Wbi().getWRid(params);
+      final res = await Bilibili.search('三无');
+      print(res);
       final file = await DefaultCacheManager().getSingleFile(
         _playlist[_currentIndex]['url']!,
         headers: {
