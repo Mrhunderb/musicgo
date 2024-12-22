@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musicgo/weigets/search.dart';
+import 'package:musicgo/weigets/search_list.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
