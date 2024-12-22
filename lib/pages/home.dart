@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musicgo/pages/search.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,19 +9,34 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.menu, color: Colors.black87),
-        title: TextField(
-          decoration: InputDecoration(
-            hintText: '搜索音乐',
-            hintStyle: const TextStyle(color: Colors.grey),
-            suffixIcon: IconButton(icon: Icon(Icons.search), onPressed: () {}),
-            filled: true,
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(),
-              borderRadius: BorderRadius.all(Radius.circular(40)),
+        title: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+              return const SearchPage();
+            }));
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              children: const [
+                Icon(Icons.search, color: Colors.black54),
+                SizedBox(width: 8),
+                Text(
+                  '搜索歌曲',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        centerTitle: true,
+        centerTitle: false,
         backgroundColor: Colors.white,
         elevation: 0,
         actions: const [

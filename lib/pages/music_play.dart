@@ -50,7 +50,7 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
         "dm_cover_img_str": "SW50ZWwoUikgSEQgR3JhcGhpY3NJbnRlbA",
       });
       // final key = await Wbi().getWRid(params);
-      final res = await Bilibili.search('三无');
+      final res = await Bilibili.searchByPage('三无', 1);
       print(res);
       final file = await DefaultCacheManager().getSingleFile(
         _playlist[_currentIndex]['url']!,
