@@ -11,9 +11,7 @@ class HomePage extends StatelessWidget {
         leading: const Icon(Icons.menu, color: Colors.black87),
         title: GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              return const SearchPage();
-            }));
+            Navigator.of(context).push(SearchPage.router());
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

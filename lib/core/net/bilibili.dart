@@ -35,4 +35,54 @@ class Bilibili {
       return [];
     }
   }
+
+  static Future<String> getPlayUrl(String bvid) async {
+    final Map<String, String> params = {
+      'qn': '0',
+      'bvid': bvid,
+      'fnval': '16',
+      'fnver': '0',
+      'fourk': '1',
+    };
+
+    try {
+      final cid = await _getCid(bvid);
+      params['cid'] = cid;
+      final res = await _dio.get(
+        Constant.playUrl,
+        queryParameters: params,
+        options: Options(
+          headers: Map.from({
+            'Referer': 'https://www.bilibili.com',
+            'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+            'Cookie': Constant.defaultCookie,
+          }),
+        ),
+      );
+
+      return res.data['data']['dash']['audio'][0]['baseUrl'];
+    } catch (e) {
+      //TODO: add log
+      return '';
+    }
+  }
+
+  static Future<String> _getCid(String bvid) async {
+    final Map<String, String> params = {
+      'bvid': bvid,
+    };
+
+    try {
+      final res = await _dio.get(
+        Constant.cidUrl,
+        queryParameters: params,
+      );
+
+      return res.data['data']['cid'].toString();
+    } catch (e) {
+      //TODO: add log
+      return '';
+    }
+  }
 }

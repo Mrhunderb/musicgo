@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:musicgo/core/net/bilibili.dart';
 import 'package:musicgo/models/bilibili.dart';
+import 'package:musicgo/pages/music_play.dart';
 
 class SearchList extends StatefulWidget {
-  const SearchList({super.key});
+  final String keyWord;
+  const SearchList({super.key, required this.keyWord});
 
   @override
   State<SearchList> createState() => _SearchListState();
@@ -26,7 +28,7 @@ class _SearchListState extends State<SearchList> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await Bilibili.searchByPage('三无', pageKey);
+      final newItems = await Bilibili.searchByPage(widget.keyWord, pageKey);
       final isLastPage = pageKey >= _pageSize;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems);
@@ -54,6 +56,11 @@ class _SearchListState extends State<SearchList> {
                 .replaceAll('<em class="keyword">', '')
                 .replaceAll('</em>', '')),
             subtitle: Text(item.author),
+            onTap: () {
+              Navigator.of(context).push(
+                MusicPlayPage.router(item.bvid),
+              );
+            },
           ),
         ),
       );

@@ -2,9 +2,11 @@ class Constant {
   static const String appName = 'Music';
   static const String _baseUrl = 'https://api.bilibili.com/x/web-interface';
   static const String navUrl = '$_baseUrl/nav';
+  static const String cidUrl = '$_baseUrl/view';
   static const String fingerUrl =
       'https://api.bilibili.com/x/frontend/finger/spi';
   static const String searchUrl = '$_baseUrl/wbi/search/type';
+  static const String playUrl = 'https://api.bilibili.com/x/player/wbi/playurl';
   static const String defaultCookie = 'SESSDATA=xxx';
   static const String defaultUA =
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63";

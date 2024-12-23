@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:musicgo/core/net/bilibili.dart';
-import 'package:musicgo/core/net/wbi.dart';
 
 class MusicPlayPage extends StatefulWidget {
-  const MusicPlayPage({super.key});
+  final String bvid;
+  const MusicPlayPage({super.key, required this.bvid});
+
+  static Route<dynamic> router(String bvid) {
+    return MaterialPageRoute(builder: (_) {
+      return MusicPlayPage(bvid: bvid);
+    });
+  }
 
   @override
-  _MusicPlayPageState createState() => _MusicPlayPageState();
+  State<MusicPlayPage> createState() => _MusicPlayPageState();
 }
 
 class _MusicPlayPageState extends State<MusicPlayPage> {
@@ -22,16 +28,6 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
       'url':
           'https://upos-hz-mirrorakam.akamaized.net/upgcxcode/49/83/1316078349/1316078349-1-30232.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEqxTEto8BTrNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0B599M=&uipk=5&nbs=1&deadline=1734548026&gen=playurlv2&os=akam&oi=3528431107&trid=a3e671f2453248e29bb61f3aed516ca5u&mid=0&platform=pc&og=cos&upsig=95dfbd8a68eb34c7a4c542eae5a8f0b7&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform,og&hdnts=exp=1734548026~hmac=9bc2c518e81c57eac675019be99e141e74dd1a7eca5e1b457cad45c41de6e1f1&bvc=vod&nettype=0&orderid=1,2&buvid=&build=0&f=u_0_0&agrr=0&bw=13349&logo=40000000',
     },
-    {
-      'title': 'Song 2',
-      'artist': 'Artist 2',
-      'url': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    },
-    {
-      'title': 'Song 3',
-      'artist': 'Artist 3',
-      'url': 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    },
   ];
 
   @override
@@ -43,17 +39,10 @@ class _MusicPlayPageState extends State<MusicPlayPage> {
 
   Future<void> _loadCurrentSong() async {
     try {
-      final params = Map<String, String>.from({
-        'mid': '2',
-        "dm_img_list": "[]",
-        "dm_img_str": "V2ViR0wgMS",
-        "dm_cover_img_str": "SW50ZWwoUikgSEQgR3JhcGhpY3NJbnRlbA",
-      });
-      // final key = await Wbi().getWRid(params);
-      final res = await Bilibili.searchByPage('三无', 1);
-      print(res);
+      final url = await Bilibili.getPlayUrl(widget.bvid);
+      print(url);
       final file = await DefaultCacheManager().getSingleFile(
-        _playlist[_currentIndex]['url']!,
+        url,
         headers: {
           'Referer': 'https://www.bilibili.com',
           'User-Agent':
